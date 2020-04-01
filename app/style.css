@@ -1,0 +1,152 @@
+.fa-cog_alignment
+{
+    text-align: right;
+    padding-right: 5%;
+}
+.fa-big{
+    font-size: 50px !important;
+}
+.fa-edit
+{
+    text-align: right;
+}
+.trash-padding
+{
+    float: right;
+    padding-right: 15px;
+    font-size: 19px;
+    padding-top: 10px;
+}
+.edit-padding
+{
+    float: right;
+    padding-right: 15px;
+    font-size: 19px;
+    padding-top: 10px;
+}
+.Edit_div
+{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+  border: 1px solid rgb(15, 0, 0);
+  border-radius: 10px;
+  width: 60%;
+  /* background-color: #e0e0e0; */
+  /* border: 1px solid #E7E7E7; */
+  border-radius: 5px;
+  font-size: 12px;
+  position: relative;
+  transition: all 0.3s ease;
+  margin-left: 15%;
+  margin-right: 15%;
+  /* margin-top: 2%; */
+}
+.error_border
+{
+    border:1px solid tomato;
+}
+.error_font
+{
+    padding-right:15%;
+    color:tomato;
+}
+.view_error_font
+{
+    padding-left:50%;
+    color:tomato;
+}
+.Selection_dropdown 
+{
+    font-size: initial;
+    background-color: #FFF;
+    width: 250px;
+    border-radius: 5px;
+    height: 30px;   
+}
+.border_header {
+    left: 18px;
+    position: absolute;
+    top: -14px;
+    background: #fff;
+    padding: 3px 10px;
+    border: 3px solid #EBEBEB;
+    font-weight: 700;
+}
+.pluginbtn {
+    border-radius: 8px;
+    background-color: #099a09;
+    border-color: #032b03;
+}
+.head_wrapper{
+    padding: 8px 15px 5px 20px;
+    overflow: hidden;
+    background: #f6f6f6;
+    border-top: 1px solid #e7e7e7;
+}
+.Cont_head
+{
+    border: 3px solid #EBEBEB;
+    position: relative;
+    margin: 15px 15px;
+    padding: 25px 10px 5px;
+}
+.pluginlabel{
+    margin-left:25%;
+    padding-right: 5px;
+    border: 1px solid #ededed;
+    background: #f7f7f7;
+    line-height: 28px;
+    /* display: block; */
+    height: 30px;
+    padding: 0 0px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    font-size: 14px;
+    width: 250px;
+    text-align: left;
+    padding-inline-start: 8px;
+}
+.PluginButton {
+    border-radius: 8px;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+    color: white;
+    border-style: solid;
+    cursor: pointer;
+    border-width: 1px;
+    display: inline-block;
+    line-height: 1.5rem;
+    padding: 6px 9px;
+    min-height: 1.5rem;
+    box-sizing: border-box;
+    transition: border-color .3s ease, color .3s ease;
+    font-size: 16px;
+}
+.spliter
+{
+    padding-left: 2%;
+    padding-right: 2%;
+    font-size: 25px;
+}
+.inital_mandatory
+{
+    color: tomato;
+    padding-left: 2px;
+    font-weight: 700;
+}
+.btn_color {
+    background-color: #0e6f0e;
+    border-radius: 8px;
+}
+.list_view_logo
+{
+    height: 50px;
+    margin-left: 18%;
+}
+.list_view_title
+{
+    padding-left: 20%;
+    font-size: 19px;
+    font-weight: 700;
+}

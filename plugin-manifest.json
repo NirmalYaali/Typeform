@@ -1,0 +1,24 @@
+{
+  "locale": [
+    "en"
+  ],
+  "service": "DESK",
+  "storage": true,
+  "type": "personal",
+  "whiteListedDomains": ["https://api.typeform.com","https://desk.zoho.com"],
+  "modules": {
+    "widgets": [
+      {
+        "location": "desk.topband",
+        "url": "/app/widget.html",
+        "name": "Desk Extension",
+        "logo": "/app/img/logo.png",
+        "icon": "/app/img/icon.png"
+      }
+    ]
+  }, 
+  "connectors": [{"connectionLinkName":"typeform","connectionName":"Typeform","serviceName":"typeform1","userAccess":false,"isUserDefinedService":true,"sharedBy":710306485,"scope":["forms:read"]},{"connectionLinkName":"desk","connectionName":"desk","serviceName":"zlabs_integration","userAccess":true,"isUserDefinedService":false,"sharedBy":711770823,"scope":["Desk.contacts.ALL","Desk.extensions.ALL","Desk.settings.ALL","Desk.tickets.ALL"]}],
+  "config": [],
+  "moduleSupport": true
+
+}

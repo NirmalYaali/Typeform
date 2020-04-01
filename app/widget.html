@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Zoho Desk - Apps</title>
+	<script src="https://js.zohostatic.com/support/developer_sdk/v1/js/ZohoDeskClientSDK.min.js"></script>
+	<link rel="stylesheet" href="style.css" type="text/css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.79/jquery.form-validator.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<script src="js/extension.js" charset="utf-8"></script>
+	<script src="js/Homepage.js" charset="utf-8"></script>
+	<script src="js/TypeformEdit.js" charset="utf-8"></script>
+</head>
+<body>
+			<form id='initial'style="text-align:center;padding-top:4%;">
+				<div class="fa-cog_alignment" onclick='window.TypeformEdit.showing_data()'>
+					<i class="fa fa-cog fa-big" aria-hidden="true" ></i>
+					
+				</div>
+				<div>
+				
+				<span style="padding-right:20px;"><img style="height: 100px;" src="img/hall-of-forms.329e2d1275f01edc3f404fb6b5f7e29a.png"></span>
+				<span style="padding-right:20px;"><i class="fa fa-arrow-right"></i></span>
+				<span><img style="width: 250px;"src="img/zoho-desk-retina-logo.png"></span>
+				</div>
+			<h4>Connect Typeform to  Zoho CRM</h4>
+			<h3>First things first: start by selecting the</h3>
+			<h3>Typeform you want to connect to Zoho CRM</h3>
+			<br>
+			<select class="mdb-select md-form Selection_dropdown" id="Typeform_select" required>
+				<option value="" disabled selected>Select a Typeform to Connect</option>
+				<!-- <option value="1">Create a New Typeform</option> -->
+			</select><span class="inital_mandatory">*</span>
+			<button type="button" class="PluginButton" onclick='window.Homepage.Showing_field_selection()'>Connect</button>	
+			<!-- <input type="submit" class="btn btn-success" value="Connect"> -->
+			<div id="inital_validation" style="margin-left:8%; color: tomato;"></div> 	
+		</form>
+			
+			<form id='selection' style="display: none;">
+				<div class="head_wrapper">
+					<span style="margin-left: 25%;"><img style="height: 25px;"src="img/logo.png">  <b>Zoho Desk</b></span>
+					<span style="margin-left: 22%;"><img style="height: 25px;" src="img/hall-of-forms.329e2d1275f01edc3f404fb6b5f7e29a.png"><b>Typeform</b></span>
+				</div>
+				<div class="Cont_head">
+					<span class="border_header">Field Mapping</span>
+		   	<section id='Mandatory'>
+				
+			</section>
+			  <section id="decisionbox">
+					<div class="form-check" style="margin-left:25%;margin-right: 60%;">
+					<input type="checkbox" id="CreateDecision" class="form-check-input" onclick='window.Homepage.check_box(this)''>
+					<label class="form-check-label" >Config More Fields</label>
+				  </div>
+			  </section>
+
+			  <section id="optional" style="display:none;">
+				
+			  </section>
+			</div>
+			<section id="button_section" style="display:none"> 
+			
+			</section>
+	
+		</form>
+
+
+			<form id="view" style="display:none;padding-top:5%;">	
+
+			</form>
+
+
+</body>
+<script>
+// 	$(document).ready(function(){
+// 	 $.validate({
+// 		 form:'#initial',
+// 		onSuccess:function()
+// 		{
+// 			console.log("success");
+// 		},
+// 		onError:function()
+// 		{
+// 			console.log("error");
+// 		}
+	
+//   });
+// })
+	var parsed_data_again;
+	var parsed_desk={};
+	var typeform_data;
+	var fields={};
+	var desk_fields={};
+	var lookup=[];
+        ZOHODESK.extension.onload().then(function(data){
+			console.log(data.meta.dcType);
+			ZOHODESK.get('database',{'key':'Typeforms','queriableValue':''}).then(function(response)
+        	{
+				let new_response=response['database.get'];
+				if(Object.keys(new_response).length)
+				{
+					total_Typeforms=new_response.data[0].value;
+				}
+				let TypeformObj={
+									url : 'https://api.typeform.com/forms',
+									headers : { 'Content-Type' : 'application/json' },
+									type : 'GET',
+									data : {},
+									postBody : {},	
+									connectionLinkName: 'typeform'
+									};
+									ZOHODESK.request(TypeformObj).then(function(data){
+										console.log(data);
+									let parsed_data=JSON.parse(data);
+									if(parsed_data.statusCode==200)
+										{
+											parsed_data_again=JSON.parse(parsed_data.response);
+											if(parsed_data_again.status=="true"){
+											var typeform_select=document.getElementById("Typeform_select");
+												for (const each_form of parsed_data_again.statusMessage.items) {
+													 if(!total_Typeforms.hasOwnProperty(each_form.id))
+													 {
+														var typeform_option=document.createElement("option");
+														typeform_option.text =each_form.title;
+														typeform_option.value=each_form.id;
+														typeform_select.add(typeform_option,typeform_select[1]);
+													 }
+												}
+											}
+										}
+									})
+			})
+			let DeskObj={
+				url:'https://desk.zoho.com/api/v1/layouts?module=tickets',
+				headers : { 'Content-Type' : 'application/json' },
+				type : 'GET',
+				data : {},
+				postBody : {},
+				connectionLinkName: 'desk'
+			};
+			ZOHODESK.request(DeskObj).then(function(data){
+				console.log(data)
+			let parsed_data=JSON.parse(data);
+			if(parsed_data.statusCode==200)
+				{
+						let parsing_data_again=JSON.parse(parsed_data.response);
+					if(parsing_data_again.status=="true"){
+						let temp_id=parsing_data_again.statusMessage.data[0].id;
+						let ticket_layout={
+							url:'https://desk.zoho.com/api/v1/layouts/'+temp_id,
+							headers:{ 'Content-Type' : 'application/json' },
+							type:'GET',
+							data:{},
+							postBody:{},
+							connectionLinkName: 'desk'
+									}
+						ZOHODESK.request(ticket_layout).then(function(data){
+						let parsed_data=JSON.parse(data);
+						if(parsed_data.statusCode==200)
+						{
+						parsed_desk_data=JSON.parse(parsed_data.response);
+						if(parsed_desk_data.status=="true")
+						{
+							let temp_mandatory_field=parsed_desk_data.statusMessage.sections[0].fields;
+							let temp_custom_fields=parsed_desk_data.statusMessage.sections[1].fields;
+							desk_fields=temp_mandatory_field.concat(temp_custom_fields);
+							console.log("desk_fields",desk_fields);
+							window.Homepage.removing_lookup();
+						} 	
+					}
+					})
+				}
+					}
+			})
+		})
+		
+</script>	
+</html>	
