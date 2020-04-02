@@ -38,7 +38,7 @@ showing_data:function()
             document.getElementById("optional").innerHTML="";
             ZOHODESK.get('database',{'key':id,'queriableValue':''}).then(function(response){
                 let new_response=response['database.get'];
-                console.log(new_response);
+                // console.log(new_response);
                 if(Object.keys(new_response).length)
                 {
                 let db_data= response['database.get']['data'][0]['value'];
@@ -81,6 +81,8 @@ showing_data:function()
                     option.value="";
                     select.add(option,select[0]);
                     for (const fields_iterator of parsed_typeform_fields) {
+                        if(fields_iterator.type!="statement")
+                        {
                         if(fields_iterator.validations.required)
                         {
                             if((iterator.type=="Text" || iterator.type=="LookUp") && fields_iterator.type=="short_text")
@@ -196,7 +198,7 @@ showing_data:function()
                                     select.add(option,select[0]);
                                 }
                             }
-                            else if(iterator.type=="Boolean" && fields_iterator.type=="yes_no")
+                            else if(iterator.type=="Boolean" && (fields_iterator.type=="yes_no" || fields_iterator.type=="legal"))
                             {
                                 let option = document.createElement('option');
                                 let Yes_no="";
@@ -246,7 +248,7 @@ showing_data:function()
                                     select.add(option,select[0]);
                                 }
                             }
-                            else if((iterator.type=="Number" || iterator.type=="Decimal") && fields_iterator.type=="number")
+                            else if((iterator.type=="Number" || iterator.type=="Decimal" || iterator.type=="Percent") && (fields_iterator.type=="number" || fields_iterator.type=="opinion_scale" || fields_iterator.type=="rating"))
                             {
                                 let option = document.createElement('option');
                                 let num="";
@@ -271,7 +273,7 @@ showing_data:function()
                                     select.add(option,select[0]);
                                 }
                             }   
-                            else if(iterator.type=="Date" && fields_iterator.type=="date")
+                            else if((iterator.type=="Date" || iterator.type=="DateTime") && fields_iterator.type=="date")
                             {
                                 let option = document.createElement('option');
                                 let date_user="";
@@ -348,6 +350,7 @@ showing_data:function()
                             }
                         }
                     }
+                    }
                     creation.appendChild(label);
                     split_span=document.createElement("span");
                      split_span.innerHTML=":";
@@ -380,6 +383,8 @@ showing_data:function()
                     split_span.classList.add("spliter");
                     Optional_creation.appendChild(split_span);     
                     for (const fields_iterator of parsed_typeform_fields) {
+                        if(fields_iterator.type!="statement")
+                        {
                             if(iterator.type=="Text" && fields_iterator.type=="short_text")
                             {   
                                 let option = document.createElement('option');
@@ -481,7 +486,7 @@ showing_data:function()
                                     select.add(option,select[0]);
                                 }
                             }
-                            else if(iterator.type=="Boolean" && fields_iterator.type=="yes_no")
+                            else if(iterator.type=="Boolean" && (fields_iterator.type=="yes_no" || fields_iterator.type=="legal"))
                             {
                                 let option = document.createElement('option');
                                 let yes="";
@@ -531,7 +536,7 @@ showing_data:function()
                                     select.add(option,select[0]);
                                 }
                             }
-                            else if((iterator.type=="Number" || iterator.type=="Decimal" || iterator.type=="Percent") && fields_iterator.type=="number")
+                            else if((iterator.type=="Number" || iterator.type=="Decimal" || iterator.type=="Percent") && (fields_iterator.type=="number" || fields_iterator.type=="opinion_scale" || fields_iterator.type=="rating"))
                             {
                                 let option = document.createElement('option');
                                 let num="";
@@ -556,7 +561,7 @@ showing_data:function()
                                     select.add(option,select[0]);
                                 }
                             }   
-                            else if(iterator.type=="Date" && fields_iterator.type=="date")
+                            else if((iterator.type=="Date" || iterator.type=="DateTime") && fields_iterator.type=="date")
                             {
                                 let option = document.createElement('option');
                                 let date="";
@@ -631,11 +636,13 @@ showing_data:function()
                                     select.add(option,select[0]);
                                 }
                             }
+                        }
                     }
                     Optional_creation.appendChild(select);
                     document.getElementById("optional").appendChild(Optional_creation);
                     
                 }
+                
             } 
             document.getElementById("button_section").innerHTML="";
             document.getElementById("button_section").style.display="block";

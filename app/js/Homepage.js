@@ -277,7 +277,10 @@ let initial={
                     option.value="";
                     option.selected="selected";
                     select.add(option,select[0]);
+                    console.log("parsed_typeform_fields",parsed_typeform_fields);
                     for (const fields_iterator of parsed_typeform_fields) {
+                        if(fields_iterator.type!="statement")
+                        {
                         if(fields_iterator.validations.required)
                         {
                             if((iterator.type=="Text" || iterator.type=="LookUp") && fields_iterator.type=="short_text")
@@ -310,7 +313,7 @@ let initial={
                                 option.value=fields_iterator.id;
                                 select.add(option,select[0]);
                             }
-                            else if(iterator.type=="Boolean" && fields_iterator.type=="yes_no")
+                            else if(iterator.type=="Boolean" && (fields_iterator.type=="yes_no" || fields_iterator.type=="legal"))
                             {
                                 let option=document.createElement("option");
                                 option.text=fields_iterator.title;
@@ -324,14 +327,14 @@ let initial={
                                 option.value=fields_iterator.id;
                                 select.add(option,select[0]);
                             }
-                            else if((iterator.type=="Number" || iterator.type=="Decimal") && fields_iterator.type=="number")
+                            else if((iterator.type=="Number" || iterator.type=="Decimal" || iterator.type=="Percent") && (fields_iterator.type=="number" || fields_iterator.type=="opinion_scale" || fields_iterator.type=="rating"))
                             {
                                 let option=document.createElement("option");
                                 option.text=fields_iterator.title;
                                 option.value=fields_iterator.id;
                                 select.add(option,select[0]);
                             }   
-                            else if(iterator.type=="Date" && fields_iterator.type=="date")
+                            else if((iterator.type=="Date" || iterator.type=="DateTime") && fields_iterator.type=="date")
                             {
                                 let option=document.createElement("option");
                                 option.text=fields_iterator.title;
@@ -353,6 +356,7 @@ let initial={
                                 select.add(option,select[0]);
                             }
                         }
+                    }
                     }
                     creation.appendChild(label);
                     // creation.appendChild(label_span);
@@ -388,6 +392,8 @@ let initial={
                     split_span.classList.add("spliter");
                     Optional_creation.appendChild(split_span);    
                     for (const fields_iterator of parsed_typeform_fields) {
+                        if(fields_iterator.type!="statement")
+                        {
                             if(iterator.type=="Text" && fields_iterator.type=="short_text")
                             {   
                                 let option=document.createElement("option");
@@ -417,7 +423,7 @@ let initial={
                                 option.value=fields_iterator.id;
                                 select.add(option,select[0]);
                             }
-                            else if(iterator.type=="Boolean" && fields_iterator.type=="yes_no")
+                            else if(iterator.type=="Boolean" && (fields_iterator.type=="yes_no" || fields_iterator.type=="legal"))
                             {
                                 let option=document.createElement("option");
                                 option.text=fields_iterator.title;
@@ -431,14 +437,14 @@ let initial={
                                 option.value=fields_iterator.id;
                                 select.add(option,select[0]);
                             }
-                            else if((iterator.type=="Number" || iterator.type=="Decimal" || iterator.type=="Percent") && fields_iterator.type=="number")
+                            else if((iterator.type=="Number" || iterator.type=="Decimal" || iterator.type=="Percent") && (fields_iterator.type=="number" || fields_iterator.type=="opinion_scale" || fields_iterator.type=="rating"))
                             {
                                 let option=document.createElement("option");
                                 option.text=fields_iterator.title;
                                 option.value=fields_iterator.id;
                                 select.add(option,select[0]);
                             }   
-                            else if(iterator.type=="Date" && fields_iterator.type=="date")
+                            else if((iterator.type=="Date" || iterator.type=="DateTime") && fields_iterator.type=="date")
                             {
                                 let option=document.createElement("option");
                                 option.text=fields_iterator.title;
@@ -459,6 +465,7 @@ let initial={
                                 option.value=fields_iterator.id;
                                 select.add(option,select[0]);
                             }
+                    }
                     }
                     Optional_creation.appendChild(select);
                     document.getElementById("optional").appendChild(Optional_creation);
