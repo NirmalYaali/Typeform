@@ -47,9 +47,9 @@ let initial={
                                                     for (const each_contact of contact_array) {
                                                         if(each_contact.isMandatory)
                                                         {
-                                                            if(!desk_fields.hasOwnProperty(each_field.apiName+"-"+each_contact.apiName))
+                                                            if(!desk_fields.hasOwnProperty(each_field.apiName+"*"+each_contact.apiName))
                                                             {
-                                                                each_contact.apiName=each_field.apiName+"-"+each_contact.apiName;
+                                                                each_contact.apiName=each_field.apiName+"*"+each_contact.apiName;
                                                                 desk_fields.push(each_contact);
                                                             }
                                                         }
@@ -100,9 +100,9 @@ let initial={
                                                     for (const each_account of account_array) {
                                                         if(each_account.isMandatory)
                                                         {
-                                                            if(!desk_fields.hasOwnProperty(each_field.apiName+"-"+each_account.apiName))
+                                                            if(!desk_fields.hasOwnProperty(each_field.apiName+"*"+each_account.apiName))
                                                             {
-                                                                each_account.apiName=each_field.apiName+"-"+each_account.apiName;
+                                                                each_account.apiName=each_field.apiName+"*"+each_account.apiName;
                                                                 desk_fields.push(each_account);
                                                             }
                                                         }
@@ -152,9 +152,9 @@ let initial={
                                                     for (const each_product of product_array) {
                                                         if(each_product.isMandatory)
                                                         {
-                                                            if(!desk_fields.hasOwnProperty(each_field.apiName+"-"+each_product.apiName) && each_product.apiName!="departmentIds")
+                                                            if(!desk_fields.hasOwnProperty(each_field.apiName+"*"+each_product.apiName) && each_product.apiName!="departmentIds")
                                                             {
-                                                                each_product.apiName=each_field.apiName+"-"+each_product.apiName;
+                                                                each_product.apiName=each_field.apiName+"*"+each_product.apiName;
                                                                 desk_fields.push(each_product);
                                                                 
                                                             }
@@ -673,7 +673,7 @@ function saving_typeform(id)
                 {       
                     if(each_field.id=="CreateDecision")
                     {   
-                        values[each_field.id+"_"+each_field.id]=each_field.checked+"_"+each_field.checked;
+                        values[each_field.id+"&"+each_field.id]=each_field.checked+"&"+each_field.checked;
                         if(each_field.checked=="false")
                         {
                             break;
@@ -682,7 +682,7 @@ function saving_typeform(id)
                     }
                     else
                     {
-                     values[each_field.id+"_" +each_field.name]=each_field.value+"_"+each_field.options[each_field.selectedIndex].text;
+                     values[each_field.id+"&" +each_field.name]=each_field.value+"&"+each_field.options[each_field.selectedIndex].text;
                     }
                 }
                 }    

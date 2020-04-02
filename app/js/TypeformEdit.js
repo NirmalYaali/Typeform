@@ -51,7 +51,6 @@ showing_data:function()
                     connectionLinkName:'typeform'
             };  
             ZOHODESK.request(reqObj).then(function(data){
-                console.log(data);
                 let parsed_data=JSON.parse(data);
                 if(parsed_data.statusCode==200){
                 let parsing_data_again=JSON.parse(parsed_data.response);
@@ -89,9 +88,9 @@ showing_data:function()
                                 let option = document.createElement('option');
                                 let text_user="";
                                 for (const each_db_data in db_data) {
-                                    if(each_db_data.split("_")[0]=="CreateDecision")
+                                    if(each_db_data.split("&")[0]=="CreateDecision")
                                     {
-                                        if((db_data[each_db_data]).split("_")[0]=="True" && optional==false)
+                                        if((db_data[each_db_data]).split("&")[0]=="True" && optional==false)
                                         {
                                             optional=true;
                                             document.getElementById("CreateDecision").value=checked;
@@ -99,10 +98,10 @@ showing_data:function()
                                         }
                                     }
                                     
-                                    if(each_db_data.split("_")[0]==iterator.apiName && (db_data[each_db_data]).split("_")[0]==fields_iterator.id)
+                                    if(each_db_data.split("&")[0]==iterator.apiName && (db_data[each_db_data]).split("&")[0]==fields_iterator.id)
                                     {
     
-                                        text_user= each_db_data.split("_")[0]
+                                        text_user= each_db_data.split("&")[0]
                                     }
                                 }
                                 if(text_user!="")
@@ -126,9 +125,9 @@ showing_data:function()
                                 let option = document.createElement('option');
                                 let long_user="";
                                 for (const each_db_data in db_data) {
-                                    if(each_db_data.split("_")[0]==iterator.apiName && (db_data[each_db_data]).split("_")[0]==fields_iterator.id)
+                                    if(each_db_data.split("&")[0]==iterator.apiName && (db_data[each_db_data]).split("&")[0]==fields_iterator.id)
                                     {
-                                        long_user= each_db_data.split("_")[0]
+                                        long_user= each_db_data.split("&")[0]
                                     }
                                 }
                                 if(long_user!="")
@@ -151,9 +150,9 @@ showing_data:function()
                                 let option = document.createElement('option');
                                 let multi_user="";
                                 for (const each_db_data in db_data) {
-                                    if(each_db_data.split("_")[0]==iterator.apiName && (db_data[each_db_data]).split("_")[0]==fields_iterator.id)
+                                    if(each_db_data.split("&")[0]==iterator.apiName && (db_data[each_db_data]).split("&")[0]==fields_iterator.id)
                                     {
-                                        multi_user= each_db_data.split("_")[0]
+                                        multi_user= each_db_data.split("&")[0]
                                     }
                                 }
 
@@ -177,9 +176,9 @@ showing_data:function()
                                 let option = document.createElement('option');
                                 let Phone="";
                                 for (const each_db_data in db_data) {
-                                    if(each_db_data.split("_")[0]==iterator.apiName && (db_data[each_db_data]).split("_")[0]==fields_iterator.id)
+                                    if(each_db_data.split("&_")[0]==iterator.apiName && (db_data[each_db_data]).split("&")[0]==fields_iterator.id)
                                     {
-                                        Phone= each_db_data.split("_")[0]
+                                        Phone= each_db_data.split("&")[0]
                                     }
                                 }
                                 if(Phone!="")
@@ -202,9 +201,9 @@ showing_data:function()
                                 let option = document.createElement('option');
                                 let Yes_no="";
                                 for (const each_db_data in db_data) {
-                                    if(each_db_data.split("_")[0]==iterator.apiName && (db_data[each_db_data]).split("_")[0]==fields_iterator.id)
+                                    if(each_db_data.split("&")[0]==iterator.apiName && (db_data[each_db_data]).split("&")[0]==fields_iterator.id)
                                     {
-                                        Yes_no= each_db_data.split("_")[0]
+                                        Yes_no= each_db_data.split("&")[0]
                                     }
                                 }
                                 if(Yes_no!="")
@@ -227,9 +226,9 @@ showing_data:function()
                                 let option = document.createElement('option');
                                 let email="";
                                 for (const each_db_data in db_data) {
-                                    if(each_db_data.split("_")[0]==iterator.apiName && (db_data[each_db_data]).split("_")[0]==fields_iterator.id)
+                                    if(each_db_data.split("&")[0]==iterator.apiName && (db_data[each_db_data]).split("&")[0]==fields_iterator.id)
                                     {
-                                        each_user= each_db_data.split("_")[0]
+                                        email= each_db_data.split("&")[0]
                                     }
                                 }
                                 if(email!="")
@@ -252,9 +251,9 @@ showing_data:function()
                                 let option = document.createElement('option');
                                 let num="";
                                 for (const each_db_data in db_data) {
-                                    if(each_db_data.split("_")[0]==iterator.apiName && (db_data[each_db_data]).split("_")[0]==fields_iterator.id)
+                                    if(each_db_data.split("&")[0]==iterator.apiName && (db_data[each_db_data]).split("&")[0]==fields_iterator.id)
                                     {
-                                        num= each_db_data.split("_")[0]
+                                        num= each_db_data.split("&")[0]
                                     }
                                 }
                                 if(num!="")
@@ -277,9 +276,9 @@ showing_data:function()
                                 let option = document.createElement('option');
                                 let date_user="";
                                 for (const each_db_data in db_data) {
-                                    if(each_db_data.split("_")[0]==iterator.apiName && (db_data[each_db_data]).split("_")[0]==fields_iterator.id)
+                                    if(each_db_data.split("&")[0]==iterator.apiName && (db_data[each_db_data]).split("&")[0]==fields_iterator.id)
                                     {
-                                        date_user= each_db_data.split("_")[0]
+                                        date_user= each_db_data.split("&")[0]
                                     }
                                 }
                                 if(date_user!="")
@@ -302,9 +301,9 @@ showing_data:function()
                                 let option = document.createElement('option');
                                 let Picklist="";
                                 for (const each_db_data in db_data) {
-                                    if(each_db_data.split("_")[0]==iterator.apiName && (db_data[each_db_data]).split("_")[0]==fields_iterator.id)
+                                    if(each_db_data.split("&")[0]==iterator.apiName && (db_data[each_db_data]).split("&")[0]==fields_iterator.id)
                                     {
-                                        Picklist= each_db_data.split("_")[0]
+                                        Picklist= each_db_data.split("&")[0]
                                     }
                                 }
                                 if(Picklist!="")
@@ -327,9 +326,9 @@ showing_data:function()
                                 let option = document.createElement('option');
                                 let website="";
                                 for (const each_db_data in db_data) {
-                                    if(each_db_data.split("_")[0]==iterator.apiName && (db_data[each_db_data]).split("_")[0]==fields_iterator.id)
+                                    if(each_db_data.split("&")[0]==iterator.apiName && (db_data[each_db_data]).split("&")[0]==fields_iterator.id)
                                     {
-                                        website= each_db_data.split("_")[0]
+                                        website= each_db_data.split("&")[0]
                                     }
                                 }
                                 if(website!="")
@@ -386,9 +385,9 @@ showing_data:function()
                                 let option = document.createElement('option');
                                 let each_text="";
                                 for (const each_db_data in db_data) {
-                                    if(each_db_data.split("_")[0]==iterator.apiName && (db_data[each_db_data]).split("_")[0]==fields_iterator.id)
+                                    if(each_db_data.split("&")[0]==iterator.apiName && (db_data[each_db_data]).split("&")[0]==fields_iterator.id)
                                     {
-                                        each_text= each_db_data.split("_")[0]
+                                        each_text= each_db_data.split("&")[0]
                                     }
                                 }
                                 if(each_text!="")
@@ -412,9 +411,9 @@ showing_data:function()
                                 let option = document.createElement('option');
                                 let long="";
                                 for (const each_db_data in db_data) {
-                                    if(each_db_data.split("_")[0]==iterator.apiName && (db_data[each_db_data]).split("_")[0]==fields_iterator.id)
+                                    if(each_db_data.split("&")[0]==iterator.apiName && (db_data[each_db_data]).split("&")[0]==fields_iterator.id)
                                     {
-                                        long= each_db_data.split("_")[0]
+                                        long= each_db_data.split("&")[0]
                                     }
                                 }
                                 if(long!="")
@@ -437,9 +436,9 @@ showing_data:function()
                                 let option = document.createElement('option');
                                 let mulit="";
                                 for (const each_db_data in db_data) {
-                                    if(each_db_data.split("_")[0]==iterator.apiName && (db_data[each_db_data]).split("_")[0]==fields_iterator.id)
+                                    if(each_db_data.split("&")[0]==iterator.apiName && (db_data[each_db_data]).split("&")[0]==fields_iterator.id)
                                     {
-                                        mulit= each_db_data.split("_")[0]
+                                        mulit= each_db_data.split("&")[0]
                                     }
                                 }
                                 if(mulit!="")
@@ -462,9 +461,9 @@ showing_data:function()
                                 let option = document.createElement('option');
                                 let phone="";
                                 for (const each_db_data in db_data) {
-                                    if(each_db_data.split("_")[0]==iterator.apiName && (db_data[each_db_data]).split("_")[0]==fields_iterator.id)
+                                    if(each_db_data.split("&")[0]==iterator.apiName && (db_data[each_db_data]).split("&")[0]==fields_iterator.id)
                                     {
-                                        phone= each_db_data.split("_")[0]
+                                        phone= each_db_data.split("&")[0]
                                     }
                                 }
                                 if(phone!="")
@@ -487,9 +486,9 @@ showing_data:function()
                                 let option = document.createElement('option');
                                 let yes="";
                                 for (const each_db_data in db_data) {
-                                    if(each_db_data.split("_")[0]==iterator.apiName && (db_data[each_db_data]).split("_")[0]==fields_iterator.id)
+                                    if(each_db_data.split("&")[0]==iterator.apiName && (db_data[each_db_data]).split("&")[0]==fields_iterator.id)
                                     {
-                                        yes= each_db_data.split("_")[0]
+                                        yes= each_db_data.split("&")[0]
                                     }
                                 }
                                 if(yes!="")
@@ -512,9 +511,9 @@ showing_data:function()
                                 let option = document.createElement('option');
                                 let email="";
                                 for (const each_db_data in db_data) {
-                                    if(each_db_data.split("_")[0]==iterator.apiName && (db_data[each_db_data]).split("_")[0]==fields_iterator.id)
+                                    if(each_db_data.split("&")[0]==iterator.apiName && (db_data[each_db_data]).split("&")[0]==fields_iterator.id)
                                     {
-                                        email= each_db_data.split("_")[0]
+                                        email= each_db_data.split("&")[0]
                                     }
                                 }
                                 if(email!="")
@@ -537,9 +536,9 @@ showing_data:function()
                                 let option = document.createElement('option');
                                 let num="";
                                 for (const each_db_data in db_data) {
-                                    if(each_db_data.split("_")[0]==iterator.apiName && (db_data[each_db_data]).split("_")[0]==fields_iterator.id)
+                                    if(each_db_data.split("&")[0]==iterator.apiName && (db_data[each_db_data]).split("&")[0]==fields_iterator.id)
                                     {
-                                        num= each_db_data.split("_")[0]
+                                        num= each_db_data.split("&")[0]
                                     }
                                 }
                                 if(num!="")
@@ -562,9 +561,9 @@ showing_data:function()
                                 let option = document.createElement('option');
                                 let date="";
                                 for (const each_db_data in db_data) {
-                                    if(each_db_data.split("_")[0]==iterator.apiName && (db_data[each_db_data]).split("_")[0]==fields_iterator.id)
+                                    if(each_db_data.split("&")[0]==iterator.apiName && (db_data[each_db_data]).split("&")[0]==fields_iterator.id)
                                     {
-                                        date= each_db_data.split("_")[0]
+                                        date= each_db_data.split("&")[0]
                                     }
                                 }
                                 if(date!="")
@@ -587,9 +586,9 @@ showing_data:function()
                                 let option = document.createElement('option');
                                 let dropdown="";
                                 for (const each_db_data in db_data) {
-                                    if(each_db_data.split("_")[0]==iterator.apiName && (db_data[each_db_data]).split("_")[0]==fields_iterator.id)
+                                    if(each_db_data.split("&")[0]==iterator.apiName && (db_data[each_db_data]).split("&")[0]==fields_iterator.id)
                                     {
-                                        dropdown= each_db_data.split("_")[0]
+                                        dropdown= each_db_data.split("&")[0]
                                     }
                                 }
                                 if(dropdown!="")
@@ -612,9 +611,9 @@ showing_data:function()
                                 let option = document.createElement('option');
                                 let url="";
                                 for (const each_db_data in db_data) {
-                                    if(each_db_data.split("_")[0]==iterator.apiName && (db_data[each_db_data]).split("_")[0]==fields_iterator.id)
+                                    if(each_db_data.split("&")[0]==iterator.apiName && (db_data[each_db_data]).split("&")[0]==fields_iterator.id)
                                     {
-                                        url= each_db_data.split("_")[0]
+                                        url= each_db_data.split("&")[0]
                                     }
                                 }
                                 if(url!="")
@@ -693,14 +692,14 @@ showing_data:function()
                     {
                         if(each_field.checked=="false")
                         {
-                            values[each_field.id+"_"+each_field.id]=each_field.checked+"_"+each_field.checked;
+                            values[each_field.id+"&"+each_field.id]=each_field.checked+"&"+each_field.checked;
                             break;
                         }
                        
                     }
                     else
                     {
-                     values[each_field.id+"_" +each_field.name]=each_field.value+"_"+each_field.options[each_field.selectedIndex].text;
+                     values[each_field.id+"&" +each_field.name]=each_field.value+"&"+each_field.options[each_field.selectedIndex].text;
                     }
                 }
                 }    
@@ -709,7 +708,7 @@ showing_data:function()
         {
             document.getElementById('initial').style.display="block";
             document.getElementById("selection").style.display="none";
-            document.getElementById("edit_view").style.display="none";
+            // document.getElementById("edit_view").style.display="none";
         })
     }
     },
