@@ -1,4 +1,3 @@
-// {"connectionLinkName":"new_typeform","connectionName":"New Typeform","serviceName":"new_typeform1","userAccess":false,"isUserDefinedService":true,"sharedBy":710306485,"scope":["forms:read"]},{"connectionLinkName":"desk","connectionName":"desk","serviceName":"zlabs_integration","userAccess":true,"isUserDefinedService":false,"sharedBy":711770823,"scope":["Desk.contacts.ALL","Desk.extensions.ALL","Desk.settings.ALL","Desk.tickets.ALL"]}
 var parsed_typeform_fields="";
 var total_Typeforms= {};
 let initial={
@@ -26,6 +25,8 @@ let initial={
                             if(parsed_data.statusCode==200)
                                 {
                                         let parsing_data_again=JSON.parse(parsed_data.response);
+                                        if(Object.keys(parsing_data_again.statusMessage).length)
+											{
                                     if(parsing_data_again.status=="true"){
                                         let temp_id=parsing_data_again.statusMessage.data[0].id;
                                         let ticket_layout={
@@ -41,6 +42,8 @@ let initial={
                                         if(parsed_data.statusCode==200)
                                             {
                                             parsed_desk_data=JSON.parse(parsed_data.response);
+                                            if(Object.keys(parsed_desk_data.statusMessage).length)
+                                            {
                                             if(parsed_desk_data.status=="true")
                                                 {
                                                     let contact_array=parsed_desk_data.statusMessage.sections[0].fields;
@@ -57,10 +60,60 @@ let initial={
                                                     let current_index=desk_fields.indexOf(each_field);
                                                     desk_fields.splice(current_index,1);
                                                 }
+                                                else
+                                                {
+                                                    document.getElementById("error").style.display = "inline-block";
+                                                    document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+                                                    setTimeout(function () {
+                                                      document.getElementById("error").style.display = "none";
+                                                  document.getElementById("errormsg").innerHTML = '';
+                                                    }, 3000);   
+                                                }
+                                            }
+                                            else if(parsed_desk_data.statusMessage.includes("Invoke URL API Execution Limit reached"))
+			                                    {
+                                                    document.getElementById("apiLimitpage").style.display="block";
+                                                    document.getElementById("view").style.display="none";
+                                                    document.getElementById("loading").style.display="none";	
+			                                    }   
+                                            }
+                                            else
+                                            {
+                                                document.getElementById("error").style.display = "inline-block";
+                                                document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+                                                setTimeout(function () {
+                                                  document.getElementById("error").style.display = "none";
+                                              document.getElementById("errormsg").innerHTML = '';
+                                                }, 3000);
                                             }
                                         })
                                         
                                     }
+                                    else
+                                    {
+                                        document.getElementById("error").style.display = "inline-block";
+                                    document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+                                    setTimeout(function () {
+                                      document.getElementById("error").style.display = "none";
+                                  document.getElementById("errormsg").innerHTML = '';
+                                    }, 3000);
+                                    }
+                                }
+                                    else if(parsing_data_again.statusMessage.includes("Invoke URL API Execution Limit reached"))
+                                    {
+                                        document.getElementById("apiLimitpage").style.display="block";
+										document.getElementById("view").style.display="none";
+										document.getElementById("loading").style.display="none";
+                                    }
+                                }
+                                else
+                                {
+                                    document.getElementById("error").style.display = "inline-block";
+                                    document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+                                    setTimeout(function () {
+                                      document.getElementById("error").style.display = "none";
+                                  document.getElementById("errormsg").innerHTML = '';
+                                    }, 3000);   
                                 }
                             })           
                         }
@@ -79,6 +132,8 @@ let initial={
                             if(parsed_data.statusCode==200)
                                 {
                                         let parsing_data_again=JSON.parse(parsed_data.response);
+                                    if(Object.keys(parsing_data_again.statusMessage).length)
+							        {
                                     if(parsing_data_again.status=="true"){
                                         let temp_id=parsing_data_again.statusMessage.data[0].id;
                                         let ticket_layout={
@@ -94,6 +149,8 @@ let initial={
                                         if(parsed_data.statusCode==200)
                                             {
                                             parsed_desk_data=JSON.parse(parsed_data.response);
+                                            if(Object.keys(parsed_desk_data.statusMessage).length)
+                                            {
                                             if(parsed_desk_data.status=="true")
                                                 {
                                                     let account_array=parsed_desk_data.statusMessage.sections[0].fields;
@@ -110,9 +167,59 @@ let initial={
                                                     let current_index=desk_fields.indexOf(each_field);
                                                     desk_fields.splice(current_index,1);
                                                 }
+                                                else
+                                                {
+                                                    document.getElementById("error").style.display = "inline-block";
+                                    document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+                                    setTimeout(function () {
+                                      document.getElementById("error").style.display = "none";
+                                  document.getElementById("errormsg").innerHTML = '';
+                                    }, 3000);
+                                                }
+                                            }
+                                            else if(parsed_desk_data.statusMessage.includes("Invoke URL API Execution Limit reached"))
+                                            {
+                                                document.getElementById("apiLimitpage").style.display="block";
+						                        document.getElementById("view").style.display="none";
+						                        document.getElementById("loading").style.display="none";
+                                            }
+                                            }
+                                            else
+                                            {
+                                                document.getElementById("error").style.display = "inline-block";
+                                                document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+                                                setTimeout(function () {
+                                                  document.getElementById("error").style.display = "none";
+                                              document.getElementById("errormsg").innerHTML = '';
+                                                }, 3000);
                                             }
                                         })
                                     }
+                                    else
+                                    {
+                                        document.getElementById("error").style.display = "inline-block";
+                                        document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+                                        setTimeout(function () {
+                                          document.getElementById("error").style.display = "none";
+                                      document.getElementById("errormsg").innerHTML = '';
+                                        }, 3000);
+                                    }
+                                }
+                                else if(parsing_data_again.statusMessage.includes("Invoke URL API Execution Limit reached"))
+                                {
+                                    document.getElementById("apiLimitpage").style.display="block";
+						            document.getElementById("view").style.display="none";
+						            document.getElementById("loading").style.display="none";
+                                }
+                                }
+                                else
+                                {
+                                    document.getElementById("error").style.display = "inline-block";
+          								document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+          								setTimeout(function () {
+          									  document.getElementById("error").style.display = "none";
+            								document.getElementById("errormsg").innerHTML = '';
+         									 }, 3000);
                                 }
                             })
                         }
@@ -131,6 +238,9 @@ let initial={
                             if(parsed_data.statusCode==200)
                                 {
                                         let parsing_data_again=JSON.parse(parsed_data.response);
+                                        if(Object.keys(parsing_data_again.statusMessage).length)
+                                        {
+                                            
                                     if(parsing_data_again.status=="true"){
                                         let temp_id=parsing_data_again.statusMessage.data[0].id;
                                         let ticket_layout={
@@ -146,6 +256,8 @@ let initial={
                                         if(parsed_data.statusCode==200)
                                             {
                                             parsed_desk_data=JSON.parse(parsed_data.response);
+                                            if(Object.keys(parsed_data.response).length)
+                                            {
                                             if(parsed_desk_data.status=="true")
                                                 {
                                                     let product_array=parsed_desk_data.statusMessage.sections[0].fields;
@@ -163,10 +275,59 @@ let initial={
                                                     let current_index=desk_fields.indexOf(each_field);
                                                     desk_fields.splice(current_index,1);
                                                 }
+                                                else{
+                                                    document.getElementById("error").style.display = "inline-block";
+                                    document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+                                    setTimeout(function () {
+                                      document.getElementById("error").style.display = "none";
+                                  document.getElementById("errormsg").innerHTML = '';
+                                    }, 3000);
+                                                }
+                                            }
+                                            else if(parsing_data_again.statusMessage.includes("Invoke URL API Execution Limit reached"))
+                                            {
+                                                document.getElementById("apiLimitpage").style.display="block";
+                                    document.getElementById("view").style.display="none";
+                                    document.getElementById("loading").style.display="none";	
+                                            }   
+                                            }
+                                            else
+                                            {
+                                                document.getElementById("error").style.display = "inline-block";
+                                                document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+                                                setTimeout(function () {
+                                                  document.getElementById("error").style.display = "none";
+                                              document.getElementById("errormsg").innerHTML = '';
+                                                }, 3000);
                                             }
                                         })
                                         
                                     }
+                                    else
+                                    {
+                                        document.getElementById("error").style.display = "inline-block";
+                                        document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+                                        setTimeout(function () {
+                                          document.getElementById("error").style.display = "none";
+                                      document.getElementById("errormsg").innerHTML = '';
+                                        }, 3000);
+                                    }
+                                }
+                                else if(parsing_data_again.statusMessage.includes("Invoke URL API Execution Limit reached"))
+                                {
+                                    document.getElementById("apiLimitpage").style.display="block";
+						document.getElementById("view").style.display="none";
+						document.getElementById("loading").style.display="none";	
+                                }
+                                }
+                                else
+                                {
+                                    document.getElementById("error").style.display = "inline-block";
+                                    document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+                                    setTimeout(function () {
+                                      document.getElementById("error").style.display = "none";
+                                  document.getElementById("errormsg").innerHTML = '';
+                                    }, 3000);
                                 }
                             })
                         }
@@ -196,7 +357,7 @@ let initial={
                })
                console.log("after",desk_fields);
         }
-
+        window.TypeformEdit.showing_data();
     },
     check_box:function(obj)
     {
@@ -210,11 +371,12 @@ let initial={
         }
         
     },
-    Showing_field_selection:function(value)
+    Showing_field_selection:function()
     {      
             mandatory=true;
             for (const iterator of document.getElementById("initial")) 
             {
+                temp_collection=document.getElementById(iterator.id); 
                     if(iterator.required==true && iterator.value=="")
                     {
                         mandatory=false;
@@ -226,13 +388,14 @@ let initial={
             }
             if(mandatory)
             {
-            $('#initial').css("display","none");   
+                let value=document.getElementById("Typeform_select").value;  
+            $('#initial').css("display","none");
+            document.getElementById("loading").style.display="block";   
             document.getElementById("Mandatory").innerHTML="";
             document.getElementById("optional").innerHTML="";
             document.getElementById("button_section").innerHTML="";
-            document.getElementById('selection').style.display="block";
             let reqObj={
-                    url:'https://api.typeform.com/forms/'+document.getElementById("Typeform_select").value,
+                    url:'https://api.typeform.com/forms/'+value,
                     headers:{ 'Content-Type' : 'application/json' },
                     type:'GET',
                     data:{},
@@ -244,6 +407,8 @@ let initial={
                 let parsed_data=JSON.parse(data);
             if(parsed_data.statusCode==200){
                 let parsing_data_again=JSON.parse(parsed_data.response);
+                if(Object.keys(parsing_data_again).length)
+                {
                 if(parsing_data_again.status=="true"){
                 parsed_typeform_fields=parsing_data_again.statusMessage.fields;
             if(desk_fields.length)
@@ -268,12 +433,14 @@ let initial={
                     label_span.innerText=" *";
                     label.appendChild(label_span);
                     let select=document.createElement("select");
-                    select.className="mdb-select md-form Selection_dropdown";
+                    // select.className="mdb-select md-form Selection_dropdown";
+                    select.className="form-control select2";
+                    select.style.width="430px";
                     select.name=iterator.displayLabel;
                     select.id=iterator.apiName;
                     select.required=true;
                     let option=document.createElement("option");
-                    option.text="";
+                    option.text="-Select-";
                     option.value="";
                     option.selected="selected";
                     select.add(option,select[0]);
@@ -327,7 +494,7 @@ let initial={
                                 option.value=fields_iterator.id;
                                 select.add(option,select[0]);
                             }
-                            else if((iterator.type=="Number" || iterator.type=="Decimal" || iterator.type=="Percent") && (fields_iterator.type=="number" || fields_iterator.type=="opinion_scale" || fields_iterator.type=="rating"))
+                            else if((iterator.type=="Number" || iterator.type=="Currency"|| iterator.type=="Decimal" || iterator.type=="Percent") && (fields_iterator.type=="number" || fields_iterator.type=="opinion_scale" || fields_iterator.type=="rating"))
                             {
                                 let option=document.createElement("option");
                                 option.text=fields_iterator.title;
@@ -378,11 +545,13 @@ let initial={
                     label.classList.add("pluginlabel");
                     label.innerHTML=iterator.displayLabel;
                     let select=document.createElement("select");
-                    select.className="mdb-select md-form Selection_dropdown";
+                    // select.className="mdb-select md-form Selection_dropdown";
+                    select.className="form-control select2";
+                    select.style.width="430px";
                     select.name=iterator.displayLabel;
                     select.id=iterator.apiName;
                     let option=document.createElement("option");
-                    option.text="";
+                    option.text="-Select-";
                     option.value="";
                     option.selected="selected";
                     select.add(option,select[0]);
@@ -437,7 +606,7 @@ let initial={
                                 option.value=fields_iterator.id;
                                 select.add(option,select[0]);
                             }
-                            else if((iterator.type=="Number" || iterator.type=="Decimal" || iterator.type=="Percent") && (fields_iterator.type=="number" || fields_iterator.type=="opinion_scale" || fields_iterator.type=="rating"))
+                            else if((iterator.type=="Number" || iterator.type=="Currency"|| iterator.type=="Decimal" || iterator.type=="Percent") && (fields_iterator.type=="number" || fields_iterator.type=="opinion_scale" || fields_iterator.type=="rating"))
                             {
                                 let option=document.createElement("option");
                                 option.text=fields_iterator.title;
@@ -474,10 +643,42 @@ let initial={
             } 
             document.getElementById("button_section").innerHTML="";
             document.getElementById("button_section").style.display="block";
-            document.getElementById("button_section").innerHTML='<button type="button" style="margin-left:40%;"class="PluginButton" onclick=saving_typeform("selection")>Save</button>'+	
+            document.getElementById("button_section").innerHTML='<button type="button" style="margin-left:35%;"class="PluginButton" onclick=saving_typeform("'+value+'")>Save</button>'+	
 			'<button type="button" style="margin-left:3%;" class="PluginButton" onclick=window.Homepage.Create_back_button()>Back</button>';  
-        }
+            document.getElementById("loading").style.display="none";
+            document.getElementById('selection').style.display="block";
+         }
+         $('.select2').select2(
+             {
+             width:'resolve'
+             }
+         );
     }
+    else
+    {
+        document.getElementById("error").style.display = "inline-block";
+                                    document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+                                    setTimeout(function () {
+                                      document.getElementById("error").style.display = "none";
+                                  document.getElementById("errormsg").innerHTML = '';
+                                    }, 3000);
+    }
+    }
+    else if(parsing_data_again.statusMessage.includes("Invoke URL API Execution Limit reached"))
+                                            {
+                                                document.getElementById("apiLimitpage").style.display="block";
+                                    document.getElementById("selection").style.display="none";
+                                    document.getElementById("loading").style.display="none";	
+                                            }
+    }
+    else
+    {
+        document.getElementById("error").style.display = "inline-block";
+        document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+        setTimeout(function () {
+          document.getElementById("error").style.display = "none";
+      document.getElementById("errormsg").innerHTML = '';
+        }, 3000);
     }
             })
         }
@@ -488,170 +689,17 @@ let initial={
             document.getElementById('initial').style.display="block";
             document.getElementById("selection").style.display="none";
     },
-    adding_values_to_dropdown:function(id)
-    {
-        if(id)
-        {
-            let existing= [];
-                for (const itr of document.getElementById("selection")) {
-                     if(itr.value && itr.type!='button')
-                     {   
-                       existing.push(itr.value);
-                     }
-
-                }
-                    let dropdown=document.getElementById(id);
-                    if(dropdown.value=="")
-                    {
-                         dropdown.innerText=null;
-						for (const each_form of parsed_typeform_fields) {
-                                if(!existing.includes(each_form.id))
-                                {
-                                    var dropdown_option=document.createElement("option");
-                                    dropdown_option.text =each_form.title;
-                                    dropdown_option.value=each_form.id;
-                                    dropdown.add(dropdown_option,dropdown[1]);
-                                 }
-                        }
-                    }
-
-        }
-    },
-    
     view_back:function()
     {
         document.getElementById('view').style.display="none";
         document.getElementById('initial').style.display="block";
     },
-    Existing_typeform:function()
-    {
-        ZOHODESK.extension.onload().then(function(data){
-			let reqObj={
-				url:'https://desk.zoho.com/api/v1/layouts',
-				headers : { 'Content-Type' : 'application/json' },
-				type : 'GET',
-				data : {},
-				postBody : {},
-				connectionLinkName: 'desk'
-			};
-				ZOHODESK.request(reqObj).then(function(err){
-                	console.log(err);
-			})
-            }) 
-    },
-    Addoption:function(id)
-    {   
-        let reqObj={
-            url:'https://api.typeform.com/forms/'+document.getElementById("Typeform_select").value,
-            headers:{ 'Content-Type' : 'application/json' },
-            type:'GET',
-            data:{},
-            postBody:{},
-            connectionLinkName:'typeform'
-        };
-            if(!fields.length)
-            {
-                ZOHODESK.request(reqObj).then(function(data){
-                fields=JSON.parse(JSON.parse(data).response).statusMessage.fields;
-                let getting_section=document.getElementById("optional");
-                let creation=document.createElement("div");
-                let span_creation=document.createElement("span");
-                let select=document.createElement("select");
-                select.className="mdb-select md-form";
-                    for (const iterator of fields) {
-                        let option =document.createElement("option");
-                        option.text=iterator.title;
-                        option.value=iterator.id;
-                        select.add(option,select[1]);
-                    }
-                span_creation.appendChild(select);
-                creation.appendChild(span_creation);
-
-                let span_creation_again=document.createElement("span");
-                let select_again=document.createElement("select");
-                select_again.className="mdb-select md-form";
-                 for (const iterator of typeform_fields) {
-                     let option=document.createElement("option");
-                     option.text=iterator.apiName;
-                     option.value=iterator.id;
-                     select_again.add(option,select_again[1]);
-                 }
-                span_creation_again.appendChild(select_again);
-                creation.appendChild(span_creation_again);
-                let icon=document.createElement("span");
-                icon.className="fa fa-trash";
-                icon.setAttribute('onclick','window.Homepage.delete_icon(event)');
-                icon.setAttribute("aria-hidden",true);
-                creation.appendChild(icon);
-                getting_section.appendChild(creation);
-        })
-        }
-        else
-        {   
-                let getting_section=document.getElementById("optional");
-                let creation=document.createElement("div");
-                let span_creation=document.createElement("span");
-                let select=document.createElement("select");
-                    select.classList.add("mdb-select") 
-                    select.classList.add("md-form");
-                    for (const iterator of fields) {
-                        let option =document.createElement("option");
-                        option.text=iterator.title;
-                        option.value=iterator.id;
-                        select.add(option,select[1]);
-                    }
-                span_creation.appendChild(select);
-                creation.appendChild(span_creation);
-                let span_creation_again=document.createElement("span");
-                let select_again=document.createElement("select");
-                select_again.classList.add("mdb-select") 
-                select_again.classList("md-form");
-                for(const iterator of typeform_fields){
-                    let option=document.createElement("option");
-                    option.text=iterator.apiName;
-                    option.value=iterator.id;
-                    select_again.add(option,select_again[0]);
-                }
-                span_creation_again.appendChild(select_again);
-                creation.appendChild(span_creation_again);
-
-                let icon=document.createElement("span");
-                icon.className="fa fa-trash";
-                icon.setAttribute('onclick','window.Homepage.delete_icon(event)');
-                icon.setAttribute("aria-hidden",true);
-                creation.appendChild(icon);
-                getting_section.appendChild(creation);
-        }
-    },
-    delete_icon:function(eventing)
-    {
-            (eventing.path[1]).remove();
-    },
-    creating_webhook:function()
-    {
-        let link_data={
-            "enabled": true,
-            "url": "https://www.bizappln.com/testwebhook/yaalitestwebhook.php"  
-          };
-        let TypeformObj={
-            url : 'https://api.typeform.com/forms/'+document.getElementById("Typeform_select").value+'/webhooks/'+document.getElementById("Typeform_select").value,
-            headers : { 'Content-Type' : 'application/json' },
-            type : 'GET',
-            data : {},
-            postBody : link_data,	
-            connectionLinkName: 'typeform'
-			};
-            ZOHODESK.request(TypeformObj).then(function(data){
-                console.log(data);
-            })
-    }
 }
 window.Homepage=initial;
-
 function saving_typeform(id)
     {
         mandatory=true;
-        for (const iterator of document.getElementById(id)) {
+        for (const iterator of document.getElementById("selection")) {
             if(iterator.type!="button")
             {
                 if(iterator.required==true && iterator.value =="")
@@ -671,8 +719,10 @@ function saving_typeform(id)
         }
         if(mandatory==true)
         {
+            document.getElementById("selection").style.display="none";
+            document.getElementById("loading").style.display="block";
             let values={};
-            for (const each_field of document.getElementById(id))
+            for (const each_field of document.getElementById("selection"))
             {
                 if(each_field.type!="button")
                 {
@@ -694,15 +744,123 @@ function saving_typeform(id)
                 }
                 }    
             }
-            // console.log("values",values);
-        ZOHODESK.set('database',{'key':document.getElementById("Typeform_select").value,'value': values,'queriableValue':''}).then(function(response)
-        { 
-            window.Homepage.creating_webhook();
-        })
-        let getting_text=document.getElementById("Typeform_select");
-        let typeform_data={};
-        typeform_data["Typeform_name"]=getting_text.options[getting_text.selectedIndex].innerHTML;
-        this.total_Typeforms[document.getElementById("Typeform_select").value]=typeform_data;
+            let Webhook_id=document.getElementById("Typeform_select").value+"_"+Date.now();
+            let link_data={
+                "enabled": true,
+                "verify_ssl":false,
+                "url": "https://desk.zoho.com/api/v1/publishedScripts/141278000000740040/execute?publishedTime=1589556076911&orgId=711770823&securityContext={{securityContext}}"   
+              };
+            let TypeformObj={
+                url : 'https://api.typeform.com/forms/'+id+'/webhooks/'+Webhook_id,
+                headers : { 'Content-Type' : 'application/json' },
+                type : 'PUT',
+                data : {},
+                postBody : link_data,	
+                connectionLinkName: 'typeform'
+                };
+                ZOHODESK.request(TypeformObj).then(function(data){
+                    console.log(data);
+                    let parsed_data=JSON.parse(data);
+                    if(parsed_data.statusCode=="200")
+                    {
+                        let parsing_status=JSON.parse(parsed_data.response);
+                        if(Object.keys(parsing_status).length)
+                        {
+                        if(parsing_status.status=="true")
+                        {
+                            ZOHODESK.set('database',{'key':document.getElementById("Typeform_select").value,'value': values,'queriableValue':'Master'}).then(function(response)
+                            { 
+                                console.log(response);
+                            })
+                            ZOHODESK.get('database',{'key':"Total_Webhooks",'queriableValue':'Webhooks'}).then(function(response)
+                                {   
+                                    let all_webhooks=response['database.get'];
+                                    if(Object.keys(all_webhooks).length)
+                                    {
+                                        this.total_webhooks=all_webhooks.data[0].value;
+                                    }
+                                    this.total_webhooks[document.getElementById("Typeform_select").value]=Webhook_id;
+                                    console.log(total_webhooks);
+                                    ZOHODESK.set('database',{'key':"Total_Webhooks",'value':total_webhooks,'queriableValue':'Webhooks'}).then(function(response)
+                                    { 
+                                        let getting_text=document.getElementById("Typeform_select");
+                                        let typeform_data={};
+                                        typeform_data["Typeform_name"]=getting_text.options[getting_text.selectedIndex].innerHTML;
+                                        this.total_Typeforms[document.getElementById("Typeform_select").value]=typeform_data;
+                                        var typeform_select=document.getElementById("Typeform_select");
+                                        typeform_select.innerHTML="";
+                                                var typeform_option=document.createElement("option");
+                                            typeform_option.text ="Select a Typeform to Connect";
+                                            typeform_option.value="";
+                                            typeform_option.selected="selected";
+                                            typeform_select.add(typeform_option,typeform_select[1]);
+                                        for (const each_form of parsed_data_again.statusMessage.items) {
+                                            if(!total_Typeforms.hasOwnProperty(each_form.id))
+                                            {
+                                            var typeform_option=document.createElement("option");
+                                            typeform_option.text =each_form.title;
+                                            typeform_option.value=each_form.id;
+                                            typeform_select.add(typeform_option,typeform_select[1]);
+                                            }
+                                            }
+            ZOHODESK.set('database',{'key':"Typeforms",'value':total_Typeforms,'queriableValue':''}).then(function(response)
+            {
+                console.log("success",response);
+            })
+            document.getElementById("selection").style.display="none";
+            document.getElementById("loading").style.display="block";
+            document.getElementById("success").style.display = "inline-block";
+              document.getElementById("sucMsg").innerHTML = "Field Mapping created successfully";
+              setTimeout(function () {
+                document.getElementById("success").style.display = "none";
+                document.getElementById("sucMsg").innerHTML = '';
+              }, 3000);
+              window.TypeformEdit.showing_data();
+                                    })
+                                 })
+                                  
+                            }
+                            else
+                            {
+                                document.getElementById("error").style.display = "inline-block";
+                                document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+                                setTimeout(function () {
+                                document.getElementById("error").style.display = "none";
+                              document.getElementById("errormsg").innerHTML = '';
+                               }, 3000);
+                               window.TypeformEdit.showing_data();
+                            }
+                        }
+                        else if(parsing_status.statusMessage.includes("Invoke URL API Execution Limit reached"))
+                                            {
+                                                document.getElementById("apiLimitpage").style.display="block";
+                                    document.getElementById("selection").style.display="none";
+                                    document.getElementById("loading").style.display="none";	
+                                            }
+                        }
+                        else
+                        {
+                            document.getElementById("error").style.display = "inline-block";
+                            document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+                            setTimeout(function () {
+                            document.getElementById("error").style.display = "none";
+                          document.getElementById("errormsg").innerHTML = '';
+                           }, 3000);
+                           window.TypeformEdit.showing_data();
+                        }
+                        
+                })
+        // document.getElementById('view').style.display="block";
+        
+    }
+    }
+    function add_typeform()
+    {
+        document.getElementById("view").style.display="none";
+        document.getElementById("initial").style.display="block";
+    }
+    function view_page()
+    {
         var typeform_select=document.getElementById("Typeform_select");
         typeform_select.innerHTML="";
                 var typeform_option=document.createElement("option");
@@ -719,11 +877,8 @@ function saving_typeform(id)
                typeform_select.add(typeform_option,typeform_select[1]);
             }
        }
-        document.getElementById('initial').style.display="block";
-        document.getElementById("selection").style.display="none";
-        ZOHODESK.set('database',{'key':"Typeforms",'value':total_Typeforms,'queriableValue':''}).then(function(response)
-        {
-            console.log("success",response);
-        })
+        document.getElementById("view").style.display="block";
+        document.getElementById("initial").style.display="none";
     }
-    }
+
+   

@@ -8,49 +8,49 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.79/jquery.form-validator.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 	<script src="js/extension.js" charset="utf-8"></script>
 	<script src="js/Homepage.js" charset="utf-8"></script>
 	<script src="js/TypeformEdit.js" charset="utf-8"></script>
 </head>
 <body>
-			<form id='initial'style="text-align:center;padding-top:4%;">
-				<div class="fa-cog_alignment" onclick='window.TypeformEdit.showing_data()'>
-					<i class="fa fa-cog fa-big" aria-hidden="true" ></i>
+			<form id='initial'style="text-align:center;padding-top:0%;display:none">
+				<div class="fa-cog_alignment" onclick='view_page()'>
+					<i class="fa fa-arrow-left fa-2x" aria-hidden="true" ></i>
 					
 				</div>
 				<div>
-				
-				<span style="padding-right:20px;"><img style="height: 100px;" src="img/hall-of-forms.329e2d1275f01edc3f404fb6b5f7e29a.png"></span>
+				<span style="padding-right:20px;"><img style="height: 90px;" src="img/hall-of-forms.329e2d1275f01edc3f404fb6b5f7e29a.png"></span>
 				<span style="padding-right:20px;"><i class="fa fa-arrow-right"></i></span>
 				<span><img style="width: 250px;"src="img/zoho-desk-retina-logo.png"></span>
 				</div>
-			<h4>Connect Typeform to  Zoho Desk</h4>
-			<h3>First things first: start by selecting the</h3>
-			<h3>Typeform you want to connect to Zoho Desk</h3>
+			<h5>Connect Typeform to  Zoho Desk</h5>
+			<h4>Step 1: Start by selecting the</h4>
+			<h4>Typeform you want to connect to Zoho Desk</h4>
 			<br>
-			<select class="mdb-select md-form Selection_dropdown" id="Typeform_select" required>
+			<select class="form-control select2 Typeform_Selection_dropdown" style="width:250px" id="Typeform_select" required>
 				<option value="" disabled selected>Select a Typeform to Connect</option>
 				<!-- <option value="1">Create a New Typeform</option> -->
 			</select><span class="inital_mandatory">*</span>
 			<button type="button" class="PluginButton" onclick='window.Homepage.Showing_field_selection()'>Connect</button>	
 			<!-- <input type="submit" class="btn btn-success" value="Connect"> -->
-			<div id="inital_validation" style="margin-left:8%; color: tomato;"></div> 	
+			<div id="inital_validation" style="margin-left:8%;padding-right: 20%;color: tomato;"></div> 	
 		</form>
 			
 			<form id='selection' style="display: none;">
 				<div class="head_wrapper">
-					<span style="margin-left: 25%;"><img style="height: 25px;"src="img/logo.png">  <b>Zoho Desk</b></span>
-					<span style="margin-left: 22%;"><img style="height: 25px;" src="img/hall-of-forms.329e2d1275f01edc3f404fb6b5f7e29a.png"><b>Typeform</b></span>
+					<span style="margin-left: 17%;"><img style="height: 25px;"src="img/logo.png">  <b>Zoho Desk</b></span>
+					<span style="margin-left: 18%;"><img style="height: 25px;" src="img/hall-of-forms.329e2d1275f01edc3f404fb6b5f7e29a.png"><b>Typeform</b></span>
 				</div>
 				<div class="Cont_head">
-					<span class="border_header">Field Mapping</span>
+					<span class="border_header">Step 2: Field Mapping</span>
 		   	<section id='Mandatory'>
 				
 			</section>
 			  <section id="decisionbox">
-					<div class="form-check" style="margin-left:25%;margin-right: 60%;">
+					<div class="form-check" style="margin-left:15%;margin-right: 60%;">
 					<input type="checkbox" id="CreateDecision" class="form-check-input" onclick='window.Homepage.check_box(this)''>
 					<label class="form-check-label" >Config More Fields</label>
 				  </div>
@@ -66,28 +66,33 @@
 	
 		</form>
 
-
-			<form id="view" style="display:none;padding-top:5%;">	
+			<form id="view" style="display:block;">	
 
 			</form>
-
-
+			<div class="zcMsg zcSucMsg" id="success" style="display: none;z-index: 13;">
+				<span id="sucMsg"></span>
+			  </div>
+			  <div class="zcMsg zcErrMsg" id="error" style="display: none;z-index: 13;">
+				<span id="errormsg"></span>
+			  </div>
+			  <div class="zmIntegLoad fixedCenter" id="loading" style="display:block;">
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+			  </div>
+			  <div class="zmIntegLoad fixedCenter" id="apiLimitpage" style="display: none;width: 220px;text-align: center;">
+				<span><i class="fa fa-exclamation-circle" aria-hidden="true"
+						style="color: #FF5722;display: block;text-align: center;font-size: 36px;"></i></span>
+				<h4>InvokeUrl Limit Is Reached For The Day</h3>		
+			</div>
 </body>
 <script>
-// 	$(document).ready(function(){
-// 	 $.validate({
-// 		 form:'#initial',
-// 		onSuccess:function()
-// 		{
-// 			console.log("success");
-// 		},
-// 		onError:function()
-// 		{
-// 			console.log("error");
-// 		}
-	
-//   });
-// })
+	$(document).ready(function()
+	{
+		$('.select2').select2();
+	});
+	var total_webhooks={};
 	var parsed_data_again;
 	var parsed_desk={};
 	var typeform_data;
@@ -95,7 +100,7 @@
 	var desk_fields={};
 	var lookup=[];
         ZOHODESK.extension.onload().then(function(data){
-			console.log(data.meta.dcType);
+			console.log(data);
 			ZOHODESK.get('database',{'key':'Typeforms','queriableValue':''}).then(function(response)
         	{
 				let new_response=response['database.get'];
@@ -112,13 +117,16 @@
 									connectionLinkName: 'typeform'
 									};
 									ZOHODESK.request(TypeformObj).then(function(data){
-										console.log(data);
 									let parsed_data=JSON.parse(data);
 									if(parsed_data.statusCode==200)
-										{
+										{								
 											parsed_data_again=JSON.parse(parsed_data.response);
+											console.log(parsed_data_again);
+											if(Object.keys(parsed_data_again.statusMessage).length)
+											{
 											if(parsed_data_again.status=="true"){
 											var typeform_select=document.getElementById("Typeform_select");
+												console.log(parsed_data_again.statusMessage);
 												for (const each_form of parsed_data_again.statusMessage.items) {
 													 if(!total_Typeforms.hasOwnProperty(each_form.id))
 													 {
@@ -129,6 +137,31 @@
 													 }
 												}
 											}
+											else
+											{
+												document.getElementById("error").style.display = "inline-block";
+          									document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+          									setTimeout(function () {
+          									  document.getElementById("error").style.display = "none";
+            								document.getElementById("errormsg").innerHTML = '';
+         									 }, 3000);
+											}
+										}
+										else if(parsed_data_again.statusMessage.includes("Invoke URL API Execution Limit reached"))
+										{	
+											document.getElementById("apiLimitpage").style.display="block";
+											document.getElementById("view").style.display="none";
+											document.getElementById("loading").style.display="none";
+										}
+										}
+										else
+										{
+											document.getElementById("error").style.display = "inline-block";
+          									document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+          									setTimeout(function () {
+          									  document.getElementById("error").style.display = "none";
+            								document.getElementById("errormsg").innerHTML = '';
+         									 }, 3000);
 										}
 									})
 			})
@@ -141,11 +174,13 @@
 				connectionLinkName: 'desk'
 			};
 			ZOHODESK.request(DeskObj).then(function(data){
-				console.log(data)
 			let parsed_data=JSON.parse(data);
+			console.log(parsed_data);
 			if(parsed_data.statusCode==200)
 				{
 						let parsing_data_again=JSON.parse(parsed_data.response);
+						if(Object.keys(parsing_data_again.statusMessage).length)
+							{
 					if(parsing_data_again.status=="true"){
 						let temp_id=parsing_data_again.statusMessage.data[0].id;
 						let ticket_layout={
@@ -163,18 +198,69 @@
 						parsed_desk_data=JSON.parse(parsed_data.response);
 						if(parsed_desk_data.status=="true")
 						{
+							if(Object.keys(parsed_desk_data.statusMessage).length)
+							{
 							let temp_mandatory_field=parsed_desk_data.statusMessage.sections[0].fields;
 							let temp_custom_fields=parsed_desk_data.statusMessage.sections[1].fields;
 							desk_fields=temp_mandatory_field.concat(temp_custom_fields);
 							console.log("desk_fields",desk_fields);
 							window.Homepage.removing_lookup();
+							}
+							else if(parsed_desk_data.statusMessage.includes("Invoke URL API Execution Limit reached"))
+							{
+								document.getElementById("apiLimitpage").style.display="block";
+								document.getElementById("view").style.display="none";
+							document.getElementById("loading").style.display="none";	
+							}
+						}
+						else
+						{
+							document.getElementById("error").style.display = "inline-block";
+          							document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+          							setTimeout(function () {
+          							document.getElementById("error").style.display = "none";
+            						document.getElementById("errormsg").innerHTML = '';
+         							}, 3000);
 						} 	
+					}
+					else
+					{
+						document.getElementById("error").style.display = "inline-block";
+          							document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+          							setTimeout(function () {
+          							document.getElementById("error").style.display = "none";
+            						document.getElementById("errormsg").innerHTML = '';
+         							}, 3000);
 					}
 					})
 				}
+				else
+				{
+					document.getElementById("error").style.display = "inline-block";
+          							document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+          							setTimeout(function () {
+          							document.getElementById("error").style.display = "none";
+            						document.getElementById("errormsg").innerHTML = '';
+         							}, 3000);
+				}
+			}
+			else if(parsing_data_again.statusMessage.includes("Invoke URL API Execution Limit reached"))
+			{
+						document.getElementById("apiLimitpage").style.display="block";
+						document.getElementById("view").style.display="none";
+						document.getElementById("loading").style.display="none";	
+			}
 					}
+					else
+							{
+									document.getElementById("error").style.display = "inline-block";
+          							document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+          							setTimeout(function () {
+          							document.getElementById("error").style.display = "none";
+            						document.getElementById("errormsg").innerHTML = '';
+         							}, 3000);
+							}
 			})
-		})
-		
+		})			
 </script>	
 </html>	

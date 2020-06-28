@@ -1,24 +1,54 @@
 {
   "locale": [
-    "en"
+      "en"
   ],
+"secret":"Typeform",
   "service": "DESK",
   "storage": true,
   "type": "personal",
-  "whiteListedDomains": ["https://api.typeform.com","https://desk.zoho.com"],
+  "whiteListedDomains": [
+      "https://api.typeform.com",
+      "https://desk.zoho.com"
+  ],
   "modules": {
-    "widgets": [
-      {
-        "location": "desk.topband",
-        "url": "/app/widget.html",
-        "name": "Desk Extension",
-        "logo": "/app/img/logo.png",
-        "icon": "/app/img/icon.png"
-      }
-    ]
-  }, 
-  "connectors": [{"connectionLinkName":"typeform","connectionName":"Typeform","serviceName":"typeform1","userAccess":false,"isUserDefinedService":true,"sharedBy":710306485,"scope":["forms:read"]},{"connectionLinkName":"desk","connectionName":"desk","serviceName":"zlabs_integration","userAccess":true,"isUserDefinedService":false,"sharedBy":711770823,"scope":["Desk.contacts.ALL","Desk.extensions.ALL","Desk.settings.ALL","Desk.tickets.ALL"]}],
+      "widgets": [
+          {
+              "location": "desk.topband",
+              "url": "/app/widget.html",
+              "name": "Desk Extension",
+              "logo": "/app/img/logo.png",
+              "icon": "/app/img/icon.png"
+          }
+      ]
+  },
+  "callbackListener": {
+    "custom_function": "https://desk.zoho.com/api/v1/publishedScripts/141278000000740040/execute?publishedTime=1589556076911"
+},
+  "zohoAuthorisation": {
+    "connectionLinkName":"desk",
+    "type":"connectors",
+    "connectionName":"desk",
+    "serviceName":"zlabs_integration",
+    "userAccess":true,
+    "isUserDefinedService":false,
+    "sharedBy":711770823,
+    "scope":
+    ["Desk.basic.ALL",
+      "Desk.contacts.ALL",
+      "Desk.extensions.ALL",
+      "Desk.search.READ",
+      "Desk.settings.ALL",
+      "Desk.tickets.ALL"]
+  },
+  "connectors": [ 
+    {"connectionLinkName":"typeform",
+      "connectionName":"Typeform",
+      "serviceName":"typeform",
+      "userAccess":false,
+      "isUserDefinedService":false,
+      "sharedBy":"711770823",
+      "scope":["forms:read","webhooks:write"]}
+],
   "config": [],
   "moduleSupport": true
-
 }

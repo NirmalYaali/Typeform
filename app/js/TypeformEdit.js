@@ -3,37 +3,59 @@ let Edit=
 {
 showing_data:function()
     {
+
         let getting_view_html=document.getElementById("view");
-            getting_view_html.innerText="";
+        getting_view_html.innerHTML="";
+        let creation_div=document.createElement("div");
+        creation_div.className="head_wrapper";
+        creation_div.style.textAlign="center";
+        creation_div.style.fontSize="22px";
+        creation_div.innerHTML="Typeform Field Configuration";
+        getting_view_html.appendChild(creation_div);
+        let icon_div=document.createElement("div");
+        icon_div.className="Icon_heading";
+        let heading_span=document.createElement("span");
+        heading_span.style.fontSize="16px";
+        heading_span.innerHTML="New Typeform";
+        icon_div.appendChild(heading_span);
+        let icon_dependency=document.createElement("i");
+        icon_dependency.className="fa fa-plus-square fa-2x icon_span";
+        // icon_dependency.onclick=
+        let icon_span=document.createElement("span");
+        icon_span.setAttribute('onclick','add_typeform()');
+        // icon_span.onclick=add_typeform();
+        icon_span.appendChild(icon_dependency)
+        icon_div.appendChild(icon_span);
+        getting_view_html.appendChild(icon_div);
+        let Header_creation= document.createElement("div");
+        Header_creation.innerText="Existing Typeforms";
+        Header_creation.className="typeform_header";
+        getting_view_html.appendChild(Header_creation);
         if(Object.keys(total_Typeforms).length)
         {
             for (const each_form in total_Typeforms) {
                 let temp_id=each_form;
-                // let creation=document.createElement("div");
-                // creation.classList="Edit_div";
-                // creation.innerHTML=each_form.title;
-                // let trash_span=document.createElement("span");
-                // trash_span.classList="fa fa-trash trash-padding";
-                // creation.appendChild(trash_span);
-                // let edit_span=document.createElement("span");
-                // edit_span.classList="fa fa-edit edit-padding";
-                // edit_span.onclick=window.TypeformEdit.Edit_view(temp_id);
-                // creation.appendChild(edit_span);
-                // getting_view_html.appendChild(creation);
                 getting_view_html.innerHTML+=' <div class="Edit_div"><span><img class="list_view_logo" src="img/hall-of-forms.329e2d1275f01edc3f404fb6b5f7e29a.png"></span><span class="list_view_title">'+total_Typeforms[each_form].Typeform_name+'</span> <span class="fa fa-trash fa-2x trash-padding" onclick=window.TypeformEdit.delete_webhook("'+temp_id+'")>'+
-                '</span> <span class="fa fa-edit fa-2x edit-padding" onclick=window.TypeformEdit.Edit_view("'+temp_id+'")></span>  </div>';
+                '</span> <span class="fa fa-edit fa-2x edit-padding" onclick=window.TypeformEdit.Edit_view("'+temp_id+'")></span>  </div><br>';
             }   
             
         }
-        getting_view_html.innerHTML+='<br><div style="text-align:center;"><button type="button" class="PluginButton" onclick="window.Homepage.view_back()">Back</button></div>';   
+        else
+        {
+            getting_view_html.innerHTML+= '<div class="ziWorstCaseWrap" id="norecords"><div class="ziWorstCase ziNoRecords style="font-size:16px;"></div>No Mappings Created</div>';
+        }
+        // getting_view_html.innerHTML+='<br><div style="text-align:center;"><button type="button" class="PluginButton" onclick="window.Homepage.view_back()">Back</button></div>';   
             getting_view_html.style.display="block";
+            document.getElementById("loading").style.display="none";
+            document.getElementById("view").style.display="block";
             document.getElementById("initial").style.display="none";
                     
     },
     Edit_view:function(id)
     {
         if(id)
-        {
+        {   
+            document.getElementById("loading").style.display='block';
             document.getElementById("Mandatory").innerHTML="";
             document.getElementById("optional").innerHTML="";
             ZOHODESK.get('database',{'key':id,'queriableValue':''}).then(function(response){
@@ -54,6 +76,8 @@ showing_data:function()
                 let parsed_data=JSON.parse(data);
                 if(parsed_data.statusCode==200){
                 let parsing_data_again=JSON.parse(parsed_data.response);
+                if(Object.keys(parsing_data_again.statusMessage).length)
+                {
                 if(parsing_data_again.status=="true"){
                 parsed_typeform_fields=parsing_data_again.statusMessage.fields;
             if(desk_fields.length)
@@ -72,12 +96,14 @@ showing_data:function()
                     label_span.innerText=" *";
                     label.appendChild(label_span);               
                     let select=document.createElement("select");
-                    select.className="mdb-select md-form Selection_dropdown";
+                    // select.className="mdb-select md-form Selection_dropdown";
+                    select.className="form-control select2";
+                    select.style.width="430px";
                     select.name=iterator.displayLabel;
                     select.id=iterator.apiName;
                     select.required=true;
                     let option=document.createElement("option");
-                    option.text="";
+                    option.text="-Select-";
                     option.value="";
                     select.add(option,select[0]);
                     for (const fields_iterator of parsed_typeform_fields) {
@@ -248,7 +274,7 @@ showing_data:function()
                                     select.add(option,select[0]);
                                 }
                             }
-                            else if((iterator.type=="Number" || iterator.type=="Decimal" || iterator.type=="Percent") && (fields_iterator.type=="number" || fields_iterator.type=="opinion_scale" || fields_iterator.type=="rating"))
+                            else if((iterator.type=="Number" || iterator.type=="Currency"|| iterator.type=="Decimal" || iterator.type=="Percent") && (fields_iterator.type=="number" || fields_iterator.type=="opinion_scale" || fields_iterator.type=="rating"))
                             {
                                 let option = document.createElement('option');
                                 let num="";
@@ -370,11 +396,13 @@ showing_data:function()
                     label.classList.add("pluginlabel");
                     label.innerHTML=iterator.displayLabel;
                     let select=document.createElement("select");
-                    select.className="mdb-select md-form Selection_dropdown";
+                    // select.className="mdb-select md-form Selection_dropdown";
+                    select.className="form-control select2";
+                    select.style.width="430px";
                     select.name=iterator.displayLabel;
                     select.id=iterator.apiName;
                     let option=document.createElement("option");
-                    option.text="";
+                    option.text="-Select-";
                     option.value="";
                     select.add(option,select[0]);
                     Optional_creation.appendChild(label);
@@ -536,7 +564,7 @@ showing_data:function()
                                     select.add(option,select[0]);
                                 }
                             }
-                            else if((iterator.type=="Number" || iterator.type=="Decimal" || iterator.type=="Percent") && (fields_iterator.type=="number" || fields_iterator.type=="opinion_scale" || fields_iterator.type=="rating"))
+                            else if((iterator.type=="Number" || iterator.type=="Currency"|| iterator.type=="Decimal" || iterator.type=="Percent") && (fields_iterator.type=="number" || fields_iterator.type=="opinion_scale" || fields_iterator.type=="rating"))
                             {
                                 let option = document.createElement('option');
                                 let num="";
@@ -646,16 +674,44 @@ showing_data:function()
             } 
             document.getElementById("button_section").innerHTML="";
             document.getElementById("button_section").style.display="block";
-            document.getElementById("button_section").innerHTML='<button type="button" style="margin-left:40%;border-radius:8px;" class="PluginButton" onclick=window.TypeformEdit.update_typeform("'+id+'")>Update</button>'+
+            document.getElementById("button_section").innerHTML='<button type="button" style="margin-left:35%;border-radius:8px;" class="PluginButton" onclick=window.TypeformEdit.update_typeform("'+id+'")>Update</button>'+
             '<button type="button" style="margin-left:3%;border-radius:8px;" class="PluginButton" onclick=window.TypeformEdit.edit_view_back("selection")>Back</button>';  
-        }
-    }
-    }
-            })
-        }
-            })
             document.getElementById("view").style.display="none";
             document.getElementById("selection").style.display="block";
+            document.getElementById("loading").style.display="none";
+            }
+            $('.select2').select2({
+                width:'resolve'
+            });
+    }
+    else
+    {
+        document.getElementById("error").style.display = "inline-block";
+                                    document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+                                    setTimeout(function () {
+                                      document.getElementById("error").style.display = "none";
+                                  document.getElementById("errormsg").innerHTML = '';
+                                    }, 3000);
+    }
+    }
+    else if(parsing_data_again.statusMessage.includes("Invoke URL API Execution Limit reached"))
+                                            {
+                                                document.getElementById("apiLimitpage").style.display="block";
+                                    document.getElementById("view").style.display="none";
+                                    document.getElementById("loading").style.display="none";	
+                                            }
+    }
+    else{
+        document.getElementById("error").style.display = "inline-block";
+        document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+        setTimeout(function () {
+          document.getElementById("error").style.display = "none";
+      document.getElementById("errormsg").innerHTML = '';
+        }, 3000);
+    }
+            })
+        }
+            })
             
 
         }
@@ -688,6 +744,7 @@ showing_data:function()
             }
     if(Mandatory)
     {
+        document.getElementById("loading").style.display="block";
         let values={};
         for (const each_field of document.getElementById("selection"))
             {
@@ -711,9 +768,16 @@ showing_data:function()
                 }
                 }    
             }
-        ZOHODESK.set('database',{'key':id,'value': values,'queriableValue':''}).then(function(response)
+        ZOHODESK.set('database',{'key':id,'value': values,'queriableValue':'Master'}).then(function(response)
         {
-            document.getElementById('initial').style.display="block";
+            document.getElementById("success").style.display = "inline-block";
+          document.getElementById("sucMsg").innerHTML = "Field Mapping Updated successfully";
+          setTimeout(function () {
+            document.getElementById("success").style.display = "none";
+            document.getElementById("sucMsg").innerHTML = '';
+          }, 3000);
+          document.getElementById("loading").style.display="none";
+            document.getElementById('view').style.display="block";
             document.getElementById("selection").style.display="none";
             // document.getElementById("edit_view").style.display="none";
         })
@@ -721,10 +785,39 @@ showing_data:function()
     },
     delete_webhook:function(id)
     {
-        ZOHODESK.delete('database',{'key':id}).then(function(response)
+        document.getElementById("loading").style.display="block";
+        ZOHODESK.get('database',{'key':"Total_Webhooks",'queriableValue':'Webhooks'}).then(function(response)
+            {
+                let all_webhooks=response['database.get'];
+                if(Object.keys(all_webhooks).length)
+                {
+                    all_webhooks=all_webhooks.data[0].value;
+                }
+                console.log(id,"all",all_webhooks[id]);
+                let TypeformObj={
+                    url : 'https://api.typeform.com/forms/'+id+'/webhooks/'+all_webhooks[id],
+                    headers : { 'Content-Type' : 'application/json' },
+                    type : 'DELETE',
+                    data : {},
+                    postBody : {},	
+                    connectionLinkName: 'typeform'
+                    };
+                    ZOHODESK.request(TypeformObj).then(function(data){
+                        let parsed_data=JSON.parse(data);
+                        console.log(parsed_data);
+                        if(parsed_data.statusCode==200 || parsed_data.statusCode==204)
+                        {
+                            let parsed_datas_status=JSON.parse(parsed_data.response);
+                            if(parsed_datas_status.status=="true")
+                            {
+                                delete all_webhooks[id];
+                        ZOHODESK.set('database',{'key':"Total_Webhooks",'value':all_webhooks,'queriableValue':'Webhooks'}).then(function(response)
+                        {
+                            
+                        })
+                        ZOHODESK.delete('database',{'key':id}).then(function(response)
                 {  
-                  delete total_Typeforms[id];
-                  window.TypeformEdit.showing_data();
+                  delete total_Typeforms[id]; 
                   ZOHODESK.set('database',{'key':"Typeforms",'value':total_Typeforms,'queriableValue':''}).then(function(response)
                     {
                         var typeform_select=document.getElementById("Typeform_select");
@@ -746,17 +839,35 @@ showing_data:function()
                         window.TypeformEdit.showing_data();   
                     })              
                 })
-        let TypeformObj={
-            url : 'https://api.typeform.com/forms/'+id+'/webhooks/'+id,
-            headers : { 'Content-Type' : 'application/json' },
-            type : 'DELETE',
-            data : {},
-            postBody : {},	
-            connectionLinkName: 'typeform'
-			};
-            ZOHODESK.request(TypeformObj).then(function(data){
-                console.log(data);
+                document.getElementById("success").style.display = "inline-block";
+        document.getElementById("sucMsg").innerHTML = "Field Mapping Deleted successfully";
+        setTimeout(function () {
+          document.getElementById("success").style.display = "none";
+          document.getElementById("sucMsg").innerHTML = '';
+        }, 3000);
+                            }
+                            else
+                            {
+                                document.getElementById("error").style.display = "inline-block";
+                                document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+                                setTimeout(function () {
+                                document.getElementById("error").style.display = "none";
+                              document.getElementById("errormsg").innerHTML = '';
+                               }, 3000);
+                            }    
+                        }
+                        else
+                        {
+                            document.getElementById("error").style.display = "inline-block";
+                            document.getElementById("errormsg").innerHTML = "Something Went Wrong Please Try Again";
+                            setTimeout(function () {
+                            document.getElementById("error").style.display = "none";
+                          document.getElementById("errormsg").innerHTML = '';
+                           }, 3000);
+                        }               
+                    })
             })
+        
     },
 }
 window.TypeformEdit=Edit;
